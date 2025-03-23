@@ -5,6 +5,8 @@ import cors from 'cors';
 import dalleRoutes from './routes/dalle.routes.js'
 import fashnaiRoutes from './routes/fashnai.routes.js'
 import bodyParser from "body-parser"; 
+import './sockets/websocket.js';
+
 
 dotenv.config();
 

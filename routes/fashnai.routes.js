@@ -1,6 +1,8 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 
+import { sendImageToClient } from '../sockets/websocket.js'; 
+
 dotenv.config();
 
 const router = express.Router();
@@ -52,6 +54,32 @@ router.get("/status", async (req, res) => {
   }
 });
 
+router.post("/sendImage", async (req, res) => {
+  try {
+    const { id, status, output } = req.body;
+    
+    // Verifica se o status é "completed"
+    if (status === 'completed' && output && output.length > 0) {
+      const imageUrl = output[0]; // Pega a URL da imagem
+      
+      // Envia a imagem para o cliente via WebSocket
+      sendImageToClient(id, imageUrl);
+      
+      console.log(`Imagem enviada para o cliente ${id}: ${imageUrl}`);
+      return res.status(200).json({ message: "Imagem enviada com sucesso!" });
+    } else {
+      return res.status(400).json({ message: "Status não é 'completed' ou saída inválida!" });
+    }
+  } catch (error) {
+    console.error("❌ Erro ao enviar imagem:", error?.message || error);
+    res.status(500).json({
+      message: "Erro ao enviar imagem!",
+      error: error?.message || error,
+    });
+  }
+});
+
+
 router.post("/", async (req, res) => {
   try {
     const { person, shirt } = req.body;
@@ -59,7 +87,7 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "A imagem é obrigatória!" });
     }
 
-    const response = await fetch('https://api.fashn.ai/v1/run', {
+    const response = await fetch('https://api.fashn.ai/v1/run?webhook_url=https://shirtcreaterserver.onrender.com/api/v1/fashnai/sendImage', {
       method: 'POST',
       body: JSON.stringify({
                model_image: person,

@@ -2,7 +2,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { parse } from 'url';
 
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT_WS || 3000;
 const wss = new WebSocketServer({port: port});
 
 // Armazena clientes conectados

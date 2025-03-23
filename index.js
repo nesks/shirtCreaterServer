@@ -11,7 +11,7 @@ import './sockets/websocket.js';
 dotenv.config();
 
 const app = express();
-app.use(cors(process.env.CORS_ORIGIN));
+app.use(cors("*"));
 app.use(bodyParser.json({ limit: "10mb" }));  // JSON até 10MB
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 

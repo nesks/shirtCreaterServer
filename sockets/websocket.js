@@ -5,17 +5,9 @@ import { parse } from 'url';
 const port = process.env.PORT_WS || 3000;
 const wss = new WebSocketServer({
     port: port,
+    // Libera para qualquer origem
     verifyClient: (info, done) => {
-      const { origin } = info.req.headers; // Captura a origem da requisição
-  
-      // Aqui você pode definir as origens permitidas
-      const allowedOrigins = ['http://localhost:5173', 'https://shirt-creater.vercel.app'];
-  
-      if (allowedOrigins.includes(origin)) {
-        done(true); // Permite a conexão
-      } else {
-        done(false, 403, 'Forbidden'); // Rejeita a conexão
-      }
+      done(true); // Aceita todas as conexões
     }
   });
 

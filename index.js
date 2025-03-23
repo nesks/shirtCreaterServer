@@ -24,5 +24,4 @@ app.use('/api/v1/fashnai', fashnaiRoutes);
 app.get('/', (req, res) => {
     res.status(200).json({message: "hello world"})
 })
-const port = process.env.PORT || 8080;
 app.listen(8080, () => console.log("server has started on port 8080"))

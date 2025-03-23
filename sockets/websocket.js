@@ -1,7 +1,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import { parse } from 'url';
 
-const wss = new WebSocketServer({ port: 3000 });
+const wss = new WebSocketServer();
 
 // Armazena clientes conectados
 const clients = new Map();

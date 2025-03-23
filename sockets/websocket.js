@@ -2,34 +2,9 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { parse } from 'url';
 
 
-const port = process.env.PORT_WS || 3000;
-const wss = new WebSocketServer({port: port});
 
-// Armazena clientes conectados
-const clients = new Map();
 
-wss.on('connection', (ws, req) => {
-    const { query } = parse(req.url, true);
-    const clientId = query.id; // Captura o ID do cliente na URL
 
-    if (!clientId) {
-        ws.close(1008, 'ID do cliente não fornecido');
-        return;
-    }
-
-    // Armazena a conexão do cliente
-    clients.set(clientId, ws);
-    console.log(`Cliente ${clientId} conectado`);
-
-    ws.on('message', (message) => {
-        console.log(`Mensagem do cliente ${clientId}:`, message);
-    });
-
-    ws.on('close', () => {
-        console.log(`Cliente ${clientId} desconectado`);
-        clients.delete(clientId); // Remove da lista ao desconectar
-    });
-});
 
 // Função para enviar mensagem para um cliente específico
 const sendToClient = (clientId, message) => {

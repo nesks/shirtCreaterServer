@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors()); 
+// app.use(cors()); 
 app.use(bodyParser.json({ limit: "10mb" }));  // JSON até 10MB
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
@@ -24,5 +24,5 @@ app.use('/api/v1/fashnai', fashnaiRoutes);
 app.get('/', (req, res) => {
     res.status(200).json({message: "hello world"})
 })
-// const port = process.env.PORT || 8080;
-// app.listen(port, () => console.log("server has started on port 8080"))
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log("server has started on port 8080"))

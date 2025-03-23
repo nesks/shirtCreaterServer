@@ -1,7 +1,7 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 
-// import { sendImageToClient } from '../sockets/websocket.js'; 
+import { sendImageToClient } from '../sockets/websocket.js'; 
 
 dotenv.config();
 

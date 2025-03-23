@@ -12,10 +12,15 @@ dotenv.config();
 
 const app = express();
 
-// Configuração de CORS
-app.use(cors({
+const allowedOrigins = [
+    'http://localhost:5173',  // URL do seu frontend
+    'https://shirt-creater.vercel.app'  // Outra origem permitida
+  ];
+  
+  // Configuração de CORS
+  app.use(cors({
     origin: (origin, callback) => {
-      if (process.env.cors.includes(origin) || !origin) { // !origin é para permitir requisições de ferramentas como Postman
+      if (allowedOrigins.includes(origin) || !origin) { // !origin é para permitir requisições de ferramentas como Postman
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'), false);
@@ -24,6 +29,7 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
   }));
+  
 app.use(bodyParser.json({ limit: "10mb" }));  // JSON até 10MB
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 

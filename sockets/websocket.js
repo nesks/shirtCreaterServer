@@ -3,13 +3,7 @@ import { parse } from 'url';
 
 
 const port = process.env.PORT_WS || 3000;
-const wss = new WebSocketServer({
-    port: port,
-    // Libera para qualquer origem
-    verifyClient: (info, done) => {
-      done(true); // Aceita todas as conexões
-    }
-  });
+const wss = new WebSocketServer({port: 3000});
 
 // Armazena clientes conectados
 const clients = new Map();

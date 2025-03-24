@@ -39,7 +39,7 @@ router.get("/status", async (req, res) => {
       // Verifica se a resposta contém a imagem esperada
       if (responseData && responseData.status == "processing") {
         console.error("❌ ERRO: Resposta em processamento pela API", responseData);
-        return res.status(503).json({ message: "Resposta em processamento.", status:"processing" });
+        return res.status(503).json( {output: { message: "Resposta em processamento.", status:"processing" }});
       }
       console.log(responseData);
     const output = responseData;

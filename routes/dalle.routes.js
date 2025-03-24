@@ -1,6 +1,9 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { Configuration, OpenAIApi } from 'openai';
+
+
+import OpenAI from "openai";
+
 
 dotenv.config();
 
@@ -12,11 +15,11 @@ if (!process.env.OPENAI_API_KEY) {
   process.exit(1); // Sai da aplicação se a chave estiver ausente
 }
 
-const config = new Configuration({      
+
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const openai = new OpenAIApi(config);
 
 router.get("/", (req, res) => {
   res.status(200).json({ message: "Hello from DALL·E" });
@@ -30,7 +33,8 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "O prompt é obrigatório!" });
     }
 
-    const response = await openai.createImage({
+    const response = await openai.images.generate({
+      model: "dall-e-3",
       prompt,
       n: 1,
       size: "1024x1024",
@@ -38,12 +42,12 @@ router.post("/", async (req, res) => {
     });
 
     // Verifica se a resposta contém a imagem esperada
-    if (!response.data || !response.data.data || response.data.data.length === 0) {
+    if (!response.data || response.data.length === 0) {
       console.error("❌ ERRO: Resposta inválida da API", response.data);
       return res.status(500).json({ message: "Falha ao gerar imagem." });
     }
 
-    const image = response.data.data[0].b64_json;
+    const image = response.data[0].b64_json;
 
     res.status(200).json({ photo: image });
   } catch (error) {

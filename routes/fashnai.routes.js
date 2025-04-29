@@ -1,6 +1,6 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
-import { sendImageToClient } from '../sockets/websocket.js';
+import { clientManager } from '../sockets/websocket.js';
 
 dotenv.config();
 
@@ -33,7 +33,7 @@ export default (fashnaiService) => {
 
             if (status === 'completed' && output && output.length > 0) {
                 const imageUrl = output[0];
-                sendImageToClient(id, imageUrl);
+                clientManager.sendImageToClient(id, imageUrl);
 
                 console.log(`Imagem enviada para o cliente ${id}: ${imageUrl}`);
                 return res.status(200).json({ message: "Imagem enviada com sucesso!" });

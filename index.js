@@ -4,8 +4,8 @@ import cors from 'cors';
 import http from 'http';
 import bodyParser from "body-parser";
 
-import DalleService from './services/dalle.service.js';
-import FashnaiService from './services/fashnai.service.js';
+import DalleService from './services/DalleService.js';
+import FashnaiService from './services/FashnaiService.js';
 
 import dalleRoutes from './routes/dalle.routes.js';
 import fashnaiRoutes from './routes/fashnai.routes.js';

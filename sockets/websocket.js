@@ -1,6 +1,6 @@
 import { WebSocketServer } from 'ws';
 import { parse } from 'url';
-import ClientManager from 'clientManager.js';
+import ClientManager from './clientManager.js';
 
 const setupWebSocket = (server) => {
     const clientManager = new ClientManager();

@@ -1,3 +1,5 @@
+import WebSocket from 'ws';
+
 class ClientManager {
     constructor() {
         this.clients = new Map();
@@ -26,8 +28,8 @@ class ClientManager {
         }
     }
 
-     sendImageToClient(clientId, imageUrl) {
-        const client = clients.get(clientId);
+    sendImageToClient(clientId, imageUrl) {
+        const client = this.clients.get(clientId);
         if (client) {
             client.send(JSON.stringify({
                 tipo: 'imagem',
@@ -36,7 +38,7 @@ class ClientManager {
         } else {
             console.error(`Cliente com clientId ${clientId} não encontrado`);
         }
-    };
+    }
 }
 
 export default ClientManager;
